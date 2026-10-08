@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gruppen-Finder · Zuweisungs-Quiz</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bogen">
+  <header>
+    <div class="marke">
+      <h1>Gruppen-Finder</h1>
+      <small id="status">Anmeldung</small>
+    </div>
+    <div class="schritte versteckt" id="schritte" aria-hidden="true"></div>
+    <div class="fortschritt-zeile versteckt" id="fortschritt-zeile">
+      <span id="fortschritt-text"></span>
+      <span id="fortschritt-gruppen"></span>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. Anmeldung -->
+    <section id="anmeldung">
+      <p class="eyebrow">Bevor es losgeht</p>
+      <h2>Bitte kurz angeben, wer du bist</h2>
+      <p class="hilfe">Die Angaben erscheinen am Ende im Auswertungsblatt und bestimmen, welche Wiener Tipps dir vorgeschlagen werden. Alles bleibt in diesem Browser &mdash; es wird nichts versendet.</p>
+
+      <div class="felder">
+        <div class="feld">
+          <label for="name">Name</label>
+          <input type="text" id="name" autocomplete="name" placeholder="z. B. Elif Yilmaz">
+          <p class="fehler" id="fehler-name"></p>
+        </div>
+        <div class="feld">
+          <label for="alter">Alter <span class="hinweis">(Zahl zwischen 6 und 99)</span></label>
+          <input type="number" id="alter" inputmode="numeric" min="6" max="99" step="1" placeholder="z. B. 21">
+          <p class="fehler" id="fehler-alter"></p>
+        </div>
+        <div class="feld">
+          <label id="g-label">Geschlecht</label>
+          <div class="chips" role="group" aria-labelledby="g-label" id="chips-geschlecht"></div>
+          <p class="fehler" id="fehler-geschlecht"></p>
+        </div>
+      </div>
+
+      <div class="zeile">
+        <button class="knopf" id="loslegen">Quiz starten</button>
+      </div>
+    </section>
+
+    <!-- 2. Fragen -->
+    <section id="quiz" class="versteckt">
+      <p class="eyebrow" id="frage-nummer" aria-live="polite">Frage 1 von 12</p>
+      <h2 class="frage-text" id="frage-text" aria-live="polite"></h2>
+      <div class="optionen" id="optionen"></div>
+      <div class="zeile">
+        <button class="knopf neutral" id="zurueck" onclick="zurueck()">Eine Antwort zurück</button>
+      </div>
+    </section>
+
+    <!-- 3. Ergebnis -->
+    <section id="ergebnis-bereich" class="versteckt">
+      <p class="eyebrow">Auswertung</p>
+      <div class="ergebnis-kopf">
+        <div class="siegel" id="ergebnis-siegel"></div>
+        <div>
+          <h2 class="gruppe-name" id="ergebnis-text"></h2>
+          <p class="ergebnis-text" id="ergebnis-beschreibung"></p>
+        </div>
+      </div>
+
+      <ul class="verteilung" id="verteilung"></ul>
+
+      <section class="fakten-block">
+        <p class="eyebrow">Gut zu wissen</p>
+        <ul id="fakten"></ul>
+      </section>
+
+      <section class="tipps-block">
+        <p class="eyebrow">Das passt zu dir in Wien</p>
+        <div id="tipp-liste"></div>
+        <p id="tipp-hinweis"></p>
+      </section>
+
+      <div class="antworten">
+        <p class="eyebrow">Deine Antworten</p>
+        <ol id="antworten-liste"></ol>
+      </div>
+
+      <p class="steckbrief" id="steckbrief"></p>
+
+      <div class="zeile aktionen">
+        <button class="knopf" onclick="starte()">Nochmal starten</button>
+        <button class="knopf neutral" onclick="window.print()">Auswertungsblatt drucken</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>Vier Gruppen: Natur &middot; Technik &middot; Kunst &middot; Sport. Zwölf Fragen, vier Antwortfelder &mdash; eines pro Gruppe. Die Gruppe mit den meisten Punkten gewinnt; bei Gleichstand zählen beide, mit je einem Hinweis und einem Tipp.</footer>
+</div>
+
+<script src="quiz.js"></script>
+</body>
+</html>

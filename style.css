@@ -1,0 +1,215 @@
+/* Gruppen-Finder · Gestaltung
+   Papier-Bogen auf Karogrund, vier Gruppenfarben, Serifen-Display. */
+
+:root{
+  --tinte:#171c19;
+  --tinte-2:#4a544e;
+  --papier:#f2f2ec;
+  --feld:#fbfbf7;
+  --linie:rgba(23,28,25,.16);
+  --linie-stark:rgba(23,28,25,.34);
+
+  --natur:#2e6b4a;
+  --technik:#1d5c73;
+  --kunst:#b5762a;
+  --sport:#a63a2e;
+
+  --display:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --text:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+
+  --aktiv:var(--tinte);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--papier);
+  color:var(--tinte);
+  font-family:var(--text);
+  font-size:17px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding:clamp(14px,3vw,40px) clamp(12px,3vw,28px) 64px;
+}
+/* dezenter Papier-Raster im Hintergrund */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(var(--linie) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--linie) 1px,transparent 1px);
+  background-size:28px 28px;opacity:.22;
+}
+.bogen{
+  position:relative;z-index:1;
+  max-width:940px;margin:0 auto;
+  background:var(--feld);
+  border:1.5px solid var(--tinte);
+  box-shadow:9px 9px 0 rgba(23,28,25,.1);
+}
+
+/* ---------- Kopfzeile mit Fortschritt ---------- */
+header{border-bottom:1.5px solid var(--tinte);padding:clamp(16px,2.6vw,26px) clamp(16px,3vw,32px) clamp(14px,2vw,20px)}
+.marke{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:baseline;justify-content:space-between}
+h1{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(1.5rem,4.4vw,2.3rem);line-height:1.05;margin:0;
+  letter-spacing:-.015em;
+}
+.marke small{font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--tinte-2)}
+.schritte{display:flex;align-items:center;gap:0;margin-top:18px}
+.schritt{
+  flex:0 0 auto;width:30px;height:30px;border-radius:50%;
+  border:1.5px solid var(--linie-stark);background:transparent;
+  display:grid;place-items:center;
+  font-size:.78rem;font-variant-numeric:tabular-nums;color:var(--tinte-2);
+  transition:background .3s,color .3s,border-color .3s,transform .3s;
+}
+.schritt.ist-aktuell{border-color:var(--tinte);color:var(--tinte);transform:scale(1.12);font-weight:700}
+.schritt.ist-fertig{color:#fff;border-color:transparent}
+.strich{flex:1 1 auto;height:2px;background:var(--linie);margin:0 5px;overflow:hidden}
+.strich i{display:block;height:100%;width:0;background:var(--tinte);transition:width .35s ease}
+.strich.voll i{width:100%}
+.fortschritt-zeile{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font-size:.84rem;color:var(--tinte-2)}
+.fortschritt-zeile b{color:var(--tinte);font-weight:600}
+
+/* ---------- Panels ---------- */
+main{padding:clamp(18px,3vw,34px) clamp(16px,3vw,32px) clamp(22px,3vw,38px)}
+.versteckt{display:none}
+.eyebrow{font-size:.92rem;font-weight:600;color:var(--tinte-2);margin:0 0 6px}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,3.4vw,1.9rem);margin:0 0 6px;line-height:1.15;letter-spacing:-.01em}
+.hilfe{margin:0 0 22px;color:var(--tinte-2);max-width:60ch}
+
+/* ---------- Anmeldung ---------- */
+.felder{display:grid;gap:20px;max-width:560px}
+.feld label{display:block;font-weight:600;font-size:.95rem;margin-bottom:7px}
+.feld .hinweis{font-weight:400;color:var(--tinte-2);font-size:.85rem}
+input[type=text],input[type=number]{
+  width:100%;font:inherit;color:var(--tinte);
+  background:var(--papier);border:1.5px solid var(--linie-stark);border-radius:0;
+  padding:11px 13px;
+}
+input:focus-visible,button:focus-visible,.chips button:focus-visible{outline:3px solid var(--technik);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{
+  font:inherit;background:var(--papier);color:var(--tinte);cursor:pointer;
+  border:1.5px solid var(--linie-stark);padding:9px 15px;border-radius:999px;
+}
+.chips button[aria-pressed=true]{background:var(--tinte);color:#fff;border-color:var(--tinte)}
+.fehler{color:var(--sport);font-size:.9rem;margin:7px 0 0;min-height:1.2em}
+
+.knopf{
+  font:inherit;font-weight:600;cursor:pointer;
+  background:var(--tinte);color:#fff;border:1.5px solid var(--tinte);
+  padding:13px 26px;border-radius:999px;
+  box-shadow:4px 4px 0 rgba(23,28,25,.18);
+  transition:transform .12s,box-shadow .12s;
+}
+.knopf:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 rgba(23,28,25,.2)}
+.knopf:active{transform:translate(2px,2px);box-shadow:none}
+.knopf.neutral{background:transparent;color:var(--tinte);box-shadow:none;font-weight:500}
+.knopf.neutral:hover{background:var(--papier)}
+.zeile{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:26px}
+
+/* ---------- Frage ---------- */
+.frage-text{font-family:var(--display);font-weight:700;font-size:clamp(1.35rem,3.8vw,2.05rem);line-height:1.2;margin:0 0 22px;letter-spacing:-.012em;min-height:1.2em}
+.optionen{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2.4vw,22px)}
+.option{
+  display:flex;flex-direction:column;gap:0;text-align:left;cursor:pointer;
+  font:inherit;color:var(--tinte);background:var(--papier);
+  border:1.5px solid var(--tinte);padding:0;overflow:hidden;
+  transition:transform .14s ease,box-shadow .14s ease;
+  box-shadow:5px 5px 0 rgba(23,28,25,.12);
+}
+.option:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--akzent,var(--tinte))}
+.option:active{transform:translate(1px,1px);box-shadow:2px 2px 0 rgba(23,28,25,.2)}
+.option .bild{background:#fff;border-bottom:1.5px solid var(--tinte);display:block;width:100%;height:auto}
+.option .bild img{display:block;width:100%;height:auto}
+.option .text{padding:13px 16px 15px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;justify-content:space-between}
+.option .text strong{font-family:var(--display);font-size:1.22rem;font-weight:700}
+.option .text span{font-size:.76rem;letter-spacing:.07em;text-transform:uppercase;color:var(--tinte-2)}
+.option.wird-gewaehlt{border-color:var(--akzent);background:#fff}
+
+/* ---------- Ergebnis ---------- */
+.ergebnis-kopf{display:flex;flex-wrap:wrap;gap:clamp(16px,3vw,30px);align-items:center}
+.siegel{flex:0 0 auto;width:clamp(96px,20vw,132px);border:1.5px solid var(--tinte);background:#fff}
+.siegel svg{display:block;width:100%;height:auto}
+.gruppe-name{font-family:var(--display);font-size:clamp(2rem,6vw,3rem);line-height:1;margin:.2em 0 .28em;letter-spacing:-.02em}
+.ergebnis-text{margin:0;max-width:46ch}
+.verteilung{margin:30px 0 0;padding:0;list-style:none;display:grid;gap:9px;max-width:520px}
+.verteilung li{display:grid;grid-template-columns:128px 1fr 48px;align-items:center;gap:12px;font-size:.92rem}
+.namemit{display:flex;align-items:center;gap:9px}
+.mini{
+  flex:0 0 auto;width:30px;display:inline-block;
+  border:1.5px solid var(--tinte);background:#fff;vertical-align:middle;
+}
+.mini svg{display:block;width:100%;height:auto}
+.gruppe-name .kopf{display:inline-flex;align-items:center;gap:.26em;line-height:1.15}
+.gruppe-name .und{font-size:.55em;color:var(--tinte-2);vertical-align:.25em;margin:0 .12em}
+.gruppe-name .mini{width:.85em;border-width:1.5px;margin-top:-.1em}
+.balken{height:13px;background:var(--papier);border:1.5px solid var(--linie-stark)}
+.balken i{display:block;height:100%;transition:width .6s ease}
+.verteilung .anzahl{text-align:right;font-variant-numeric:tabular-nums;color:var(--tinte-2);white-space:nowrap}
+
+/* ---------- Fun Facts ---------- */
+.fakten-block{margin:30px 0 0;border-top:1.5px solid var(--linie);padding-top:18px}
+#fakten{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:10px;max-width:640px}
+#fakten li{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start}
+#fakten li span{
+  font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:#fff;
+  padding:4px 9px;justify-self:start;white-space:nowrap;
+}
+#fakten li.eigen span{background:var(--aktiv)}
+#fakten li.fremd span{background:var(--tinte-2)}
+#fakten p{margin:0;font-size:.95rem}
+
+/* ---------- Wien-Tipps ---------- */
+.tipps-block{margin:30px 0 0;border-top:1.5px solid var(--linie);padding-top:18px}
+#tipp-liste{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+.tipp{
+  background:var(--papier);border:1.5px solid var(--linie-stark);
+  border-top:4px solid var(--aktiv);
+  padding:14px 16px 15px;
+}
+.tipp h4{font-family:var(--display);font-size:1.12rem;margin:0 0 2px;letter-spacing:-.01em}
+.tipp .tipp-gruppe{margin:0 0 4px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.tipp .wo{margin:0 0 8px;font-size:.8rem;color:var(--tinte-2)}
+.tipp p{margin:0;font-size:.92rem}
+.tipp .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.tag{
+  font-size:.72rem;letter-spacing:.03em;color:var(--tinte-2);
+  border:1px solid var(--linie-stark);border-radius:999px;padding:2px 9px;background:var(--feld);
+}
+#tipp-hinweis{margin:14px 0 0;font-size:.8rem;color:var(--tinte-2);max-width:70ch}
+
+/* ---------- Antworten & Steckbrief ---------- */
+.antworten{margin:30px 0 0;border-top:1.5px solid var(--linie);padding-top:18px}
+.antworten ol{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.antworten li{display:flex;gap:11px;align-items:baseline;font-size:.93rem;color:var(--tinte-2)}
+.punkt{flex:0 0 auto;width:11px;height:11px;border-radius:50%;transform:translateY(1px)}
+.steckbrief{margin:26px 0 0;padding:14px 16px;background:var(--papier);border-left:4px solid var(--tinte);font-size:.92rem}
+.steckbrief b{font-weight:600}
+footer{border-top:1.5px solid var(--tinte);padding:14px clamp(16px,3vw,32px);font-size:.8rem;color:var(--tinte-2)}
+
+@media (max-width:620px){
+  /* vier Felder bleiben auch auf dem Handy zweispaltig, nur kompakter */
+  .optionen{gap:9px}
+  .option .text{padding:9px 10px 11px}
+  .option .text strong{font-size:.98rem}
+  .option .text span{font-size:.64rem}
+  .verteilung li{grid-template-columns:110px 1fr 46px;gap:9px}
+  .verteilung .namemit{gap:7px}
+  .mini{width:24px}
+  .schritt{width:24px;height:24px;font-size:.68rem}
+  .strich{margin:0 2px}
+  .marke{flex-direction:column;align-items:flex-start}
+  #tipp-liste{grid-template-columns:1fr}
+  #fakten li{grid-template-columns:1fr;gap:4px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+@media print{
+  body{background:#fff;padding:0}
+  body::before{display:none}
+  .bogen{border:none;box-shadow:none;max-width:none}
+  .knopf,.aktionen{display:none!important}
+  .tipp{break-inside:avoid}
+}
