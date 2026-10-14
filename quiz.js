@@ -3,9 +3,9 @@
    Aufbau:  BILDER  →  fragen  →  gruppen  →  tipps
    und darunter die eigentliche Quiz-Logik.
    ========================================================= */
-//testkommenar
 /* ---------------------------------------------------------
 //testkommentar promise
+//testkommentar jewi
    1. BILDER
    Kleine Cartoon-Zeichnungen, direkt im Code (SVG).
    Kein Bilder-Ordner noetig. Wer echte Fotos benutzen will:
