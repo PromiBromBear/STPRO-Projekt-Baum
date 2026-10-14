@@ -3,7 +3,7 @@
    Aufbau:  BILDER  →  fragen  →  gruppen  →  tipps
    und darunter die eigentliche Quiz-Logik.
    ========================================================= */
-
+//testkommenar
 /* ---------------------------------------------------------
    1. BILDER
    Kleine Cartoon-Zeichnungen, direkt im Code (SVG).
