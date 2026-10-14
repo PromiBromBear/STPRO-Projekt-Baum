@@ -5,6 +5,7 @@
    ========================================================= */
 //testkommenar
 /* ---------------------------------------------------------
+//testkommentar promise
    1. BILDER
    Kleine Cartoon-Zeichnungen, direkt im Code (SVG).
    Kein Bilder-Ordner noetig. Wer echte Fotos benutzen will:
